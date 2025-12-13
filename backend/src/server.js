@@ -3,7 +3,6 @@ const cors = require('cors');
 require('dotenv').config();
 const sequelize = require('./config/database');
 const routes =  require('./routes');
-const { ConnectionRefusedError } = require('sequelize');
 
 const app = express();
 

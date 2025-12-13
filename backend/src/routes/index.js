@@ -10,7 +10,7 @@ const bookingRoutes = require('./bookingRoutes');
 // /api/artists
 router.use('/artists' ,artistRoutes);
 // /api/events
-router.use('/events' , eventRoutes);
+router.use('/event' , eventRoutes);
 // /api/bookings
 router.use('/bookings' ,bookingRoutes);
 
