@@ -168,7 +168,7 @@ EventInfo (1) ──── (Many) Booking
 
 ## 🧪 Testing
 
-Use Postman collection: `La-Grande-Soiree-Gnawa-API.postman_collection.json`
+Use Postman collection: `https://wissaloa1-1100130.postman.co/workspace/8e0a797f-51f4-4ef2-8f75-ef6fcbda6dde/documentation/48967576-273668b6-14a0-4627-a35f-285af4ac45e5`
 
 Import and test all endpoints.
 
