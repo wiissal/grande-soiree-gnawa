@@ -1,6 +1,6 @@
 const {DataTypes} = require ('sequelize');
 const sequelize = require ('../config/database');
- const EventInfo = sueqilize.define ('EventInfo', {
+ const EventInfo = sequelize.define ('EventInfo', {
   id:{
     type: DataTypes.INTEGER,
     primaryKey: true,

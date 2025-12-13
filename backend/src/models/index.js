@@ -10,7 +10,7 @@ Artist.hasMany(Booking, {
 Booking.belongsTo(Artist, {
   foreignKey: 'artist_id',
 });
-EventInfo.hasMnay(Booking, {
+EventInfo.hasMany(Booking, {
   foreignKey: 'event_info_id',
   onDelete: 'CASCADE',
 });

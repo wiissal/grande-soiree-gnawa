@@ -14,7 +14,7 @@ const sequelize = require('../config/database');
   user_name:{
     type: DataTypes.STRING,
     allowNull: false,
-    validation:{
+    validate:{
       notEmpty:true,
     }
   },
@@ -42,7 +42,12 @@ const sequelize = require('../config/database');
   },
   //link to artist table : foreign key
   artist_id:{
-    type: DataTypes.INTIGER,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+   event_info_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
 },{
   timestamps: true,
