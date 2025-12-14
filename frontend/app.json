@@ -3,18 +3,6 @@
     "name": "gnawa-mobile",
     "slug": "gnawa-mobile",
     "version": "1.0.0",
-    "scheme": "gnawa",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "scheme": "gnawa"
   }
 }
