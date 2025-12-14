@@ -1,24 +1,65 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { colors } from "../constants/colors";
 
-export const EventCard = ({ event }) => {
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { colors } from '../constants/colors';
+
+export default function EventCard({ event }) {
   if (!event) return null;
+
   return (
-    <View style={StyleSheet.card}>
-      <image source={{ uri: event.image }} style={StyleSheet.image} />
-      <View style={StyleSheet.content}>
+    <View style={styles.card}>
+      <Image
+        source={{ uri: event.image }}
+        style={styles.image}
+      />
+      <View style={styles.overlay}>
+        <Text style={styles.badge}>{event.badge}</Text>
         <Text style={styles.title}>{event.name}</Text>
-        <Text style={styles.date}>{event.eventDate}</Text>
-        <Text style={styles.location}>{event.location}</Text>
         <Text style={styles.description}>{event.description}</Text>
       </View>
     </View>
   );
-};
+}
 
-const styles = StyleSheet.create(
-  {
-
-  }
-)
+const styles = StyleSheet.create({
+  card: {
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 20,
+    height: 280,
+    position: 'relative',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    padding: 16,
+  },
+  badge: {
+    backgroundColor: colors.burntBronze,
+    color: colors.white,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+    fontSize: 12,
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
+    marginBottom: 8,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: colors.white,
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 13,
+    color: colors.warmSand,
+    lineHeight: 18,
+  },
+});
