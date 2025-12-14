@@ -5,12 +5,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { colors } from '../constants/colors';
 
 // Screens
-import SplashScreen from '../screens/SplashScreen';
-import HomeScreen from '../screens/HomeScreen';
-import ArtistsListScreen from '../screens/ArtistsListScreen';
-import ArtistDetailScreen from '../screens/ArtistDetailScreen';
-import BookingFormScreen from '../screens/BookingFormScreen';
-import MyBookingsScreen from '../screens/MyBookingsScreen';
+import SplashScreen from '../Screens/SplashScreen';
+import HomeScreen from '../Screens/HomeScreen';
+import ArtistsListScreen from '../Screens/ArtistsListScreen';
+import ArtistDetailScreen from '../Screens/ArtistDetailScreen';
+import BookingFormScreen from '../Screens/BookingFormScreen';
+import MyBookingsScreen from '../Screens/MyBookingsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
