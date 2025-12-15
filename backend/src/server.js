@@ -7,8 +7,9 @@ const routes =  require('./routes');
 const app = express();
 
 app.use(express.json());
-app.use(cors({ //allow front end to access backend
-  origin:process.env.FRONTEND_URL,  // React Native app URL
+app.use(cors({ 
+  origin: "*",
+  // origin:process.env.FRONTEND_URL,  // React Native app URL
   credentials: true,
 }));
 //test routes to check if server is running 
