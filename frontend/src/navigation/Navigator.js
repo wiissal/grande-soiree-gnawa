@@ -65,6 +65,8 @@ function TabNavigator() {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Bookings') {
             iconName = focused ? 'bookmark' : 'bookmark-outline';
+          }else if (route.name === 'BookingForm') {
+            iconName = focused ? 'ticket' : 'ticket-outline';
           }
           return <Ionicons name={iconName} size={24} color={color} />;
         },
@@ -84,6 +86,7 @@ function TabNavigator() {
     >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Artists" component={ArtistsStack} />
+       <Tab.Screen name="BookingForm" component={BookingFormScreen} />
       <Tab.Screen name="Bookings" component={MyBookingsScreen} />
     </Tab.Navigator>
   );

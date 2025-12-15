@@ -105,7 +105,7 @@ export default function HomeScreen({ navigation }) {
         style={styles.browseButton}
         onPress={() => navigation.navigate("Artists")}
       >
-        <Text style={styles.browseButtonText}>Browse All Artists →</Text>
+        <Text style={styles.browseButtonText}>Browse All Artists </Text>
       </TouchableOpacity>
     </ScrollView>
   );
