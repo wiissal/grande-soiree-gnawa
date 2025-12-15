@@ -18,7 +18,7 @@ export default function ArtistListScreen({ navigation }) {
       id: 1,
       name: "Oum",
       description: "Breaking barriers on one of the finest female voices...",
-      price: "MAD 149",
+      price: "  MAD 149",
       image:
         "https://cdn-images.dzcdn.net/images/artist/7399d5192ac0599112e305e15adc91ac/1900x1900-000000-81-0-0.jpg",
     },
@@ -99,6 +99,12 @@ export default function ArtistListScreen({ navigation }) {
       <Text style={styles.artistDescription} numberOfLines={2}>
         {item.description}
       </Text>
+      <TouchableOpacity
+      style={styles.getTicketButton}
+        onPress={() => navigation.navigate('Home', { screen: 'BookingForm' })}
+    >
+      <Text style={styles.getTicketText}>Get Ticket</Text>
+    </TouchableOpacity>
     </TouchableOpacity>
   );
   return (
@@ -246,4 +252,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 10,
   },
+  getTicketButton: {
+  backgroundColor: colors.burntBronze,
+  marginHorizontal: 8,
+  marginTop: 10,
+  marginBottom: 10,
+  paddingVertical: 10,
+  borderRadius: 6,
+  alignItems: 'center',
+},
+getTicketText: {
+  color: colors.white,
+  fontSize: 13,
+  fontWeight: 'bold',
+},
 });
