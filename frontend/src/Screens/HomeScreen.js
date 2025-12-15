@@ -35,10 +35,14 @@ export default function HomeScreen({ navigation }) {
       image:
         "https://cdn-images.dzcdn.net/images/artist/7399d5192ac0599112e305e15adc91ac/1900x1900-000000-81-0-0.jpg",
     },
-  ]
+  ];
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Festival Header */}
+      <View style={styles.festivalHeader}>
+        <Text style={styles.festivalTitle}>Festival Gnaoua</Text>
+      </View>
       {/* Event Card */}
       <View style={styles.eventSection}>
         <EventCard event={event} />
@@ -88,9 +92,9 @@ export default function HomeScreen({ navigation }) {
               onPress={() =>
                 navigation.navigate("Artists", {
                   screen: "ArtistDetail",
-                   params: {id: artist.id }
-              })
-            }
+                  params: { id: artist.id },
+                })
+              }
             />
           </View>
         ))}
@@ -111,6 +115,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  festivalHeader: {
+    backgroundColor: colors.burntBronze,
+    paddingHorizontal: 18,
+    paddingVertical: 18,
+    marginBottom: 15,
+  },
+  festivalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.white,
   },
   header: {
     flexDirection: "row",
