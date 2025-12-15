@@ -117,15 +117,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   festivalHeader: {
-    backgroundColor: colors.burntBronze,
+    backgroundColor: colors.white,
     paddingHorizontal: 18,
     paddingVertical: 18,
-    marginBottom: 15,
+    // paddingTop: 20,
+    marginBottom: 2,
   },
   festivalTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: colors.white,
+    color: colors.burntBronze,
+    paddingTop: 20,
   },
   header: {
     flexDirection: "row",

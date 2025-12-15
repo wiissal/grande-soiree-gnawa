@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 14,
+     paddingTop: 20, 
     backgroundColor: colors.white,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
@@ -154,16 +155,17 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.deepTeal,
+    color: colors.burntBronze,
   },
   bannerContainer: {
     position: 'relative',
-    height: 150,
+    height: 190,
     backgroundColor: '#2a2a2a',
   },
   bannerImage: {
     width: '100%',
     height: '100%',
+
   },
   bannerOverlay: {
     position: 'absolute',
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 16,
   },
   label: {
     fontSize: 14,
@@ -244,9 +246,9 @@ const styles = StyleSheet.create({
     color: colors.mistGrey,
   },
   priceBreakdown: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#EDE8D0',
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 15,
     marginBottom: 20,
   },
   priceRow: {
