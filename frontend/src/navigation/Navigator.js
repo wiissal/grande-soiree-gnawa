@@ -84,7 +84,19 @@ function TabNavigator() {
       })}
     >
       <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Artists" component={ArtistsStack} />
+     <Tab.Screen 
+  name="Artists" 
+  component={ArtistsStack}
+  listeners={({ navigation }) => ({
+    tabPress: (e) => {
+      e.preventDefault();
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Artists' }],
+      });
+    },
+  })}
+/>
        <Tab.Screen name="BookingForm" component={BookingFormScreen} />
       <Tab.Screen name="Bookings" component={MyBookingsScreen} />
     </Tab.Navigator>
