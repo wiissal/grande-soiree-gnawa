@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { colors } from "../constants/colors";
 
-export default function SplashScreen({ navigation }) {
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.replace("Main");
-    }, 4000);
-  }, [navigation]);
-
+export default function SplashScreen() {
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/splash.jpg")} style={styles.image} />
