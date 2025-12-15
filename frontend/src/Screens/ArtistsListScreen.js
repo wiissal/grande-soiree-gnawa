@@ -33,10 +33,8 @@ export default function ArtistListScreen({ navigation }) {
       onPress={() => navigation.navigate("ArtistDetail", { id: item.id })}
     >
       <View style={styles.imageContainer}>
-        <Image source={{ uri: item.image }} style={styles.artistImage} />
-        <View style={styles.priceBox}>
-          <Text style={styles.priceText}>{item.price}</Text>
-        </View>
+        <Image source={{ uri: item.image }} style={styles.artistImage} 
+         onError={() => console.log('Image failed to load:', item.image)}/>
       </View>
       <Text style={styles.artistName}>{item.name}</Text>
       <Text style={styles.artistDescription} numberOfLines={2}>

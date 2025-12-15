@@ -20,7 +20,7 @@ export default function BookingFormScreen({ navigation }) {
   const [numTickets, setNumTickets] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const ticketPrice = 450;
+  const ticketPrice = 90;
   const serviceFee = 20;
   const totalPrice = numTickets * ticketPrice + serviceFee;
 
@@ -84,7 +84,7 @@ export default function BookingFormScreen({ navigation }) {
       <View style={styles.bannerContainer}>
         <Image
           source={{
-            uri: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=2070&auto=format&fit=crop',
+            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQizz3I9b98jh2Z0KXJyHGo6_oxFqgXTphpJw&s",
           }}
           style={styles.bannerImage}
         />
@@ -140,7 +140,7 @@ export default function BookingFormScreen({ navigation }) {
               <Text style={styles.counterButtonTextActive}>+</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.ticketSubtext}>General Admission - 450 MAD</Text>
+          <Text style={styles.ticketSubtext}>General Admission - 90 MAD</Text>
         </View>
 
         {/* Price Breakdown */}
