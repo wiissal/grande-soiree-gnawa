@@ -22,10 +22,10 @@ export default function EventCard({ event }) {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 12,
+    borderRadius: 18,
     overflow: 'hidden',
-    marginBottom: 20,
-    height: 280,
+    marginBottom: 10,
+    height: 380,
     position: 'relative',
   },
   image: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 4,
+    borderRadius: 10,
     fontSize: 12,
     fontWeight: 'bold',
     alignSelf: 'flex-start',

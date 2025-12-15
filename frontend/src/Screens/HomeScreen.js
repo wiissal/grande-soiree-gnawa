@@ -16,7 +16,7 @@ export default function HomeScreen({ navigation }) {
     name: "Experience the Spiritual Rhythms",
     description: "Join us for a night of Gnawa music and culture in Agadir",
     image:
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://a3communication.net/wp-content/uploads/2023/06/Festival-Gnoua4.jpg",
     badge: "LIVE FESTIVAL",
   };
 
@@ -26,16 +26,16 @@ export default function HomeScreen({ navigation }) {
       name: "MEHDI NASSOULI",
       origin: "Main Stage",
       image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150&h=150&fit=crop",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcprqHxguH2N8FrBlLmCqxc8pdF-lnWxquIw&s",
     },
     {
       id: 2,
       name: "OUM",
       origin: "South Stage",
       image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150&h=150&fit=crop",
+        "https://cdn-images.dzcdn.net/images/artist/7399d5192ac0599112e305e15adc91ac/1900x1900-000000-81-0-0.jpg",
     },
-  ];
+  ]
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -54,7 +54,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.infoBox}>
           <Ionicons name="location" size={20} color="#C17A4C" />
           <Text style={styles.infoDate}>Location</Text>
-          <Text style={styles.infoLabel}>Essaouira</Text>
+          <Text style={styles.infoLabel}>AGADIR</Text>
         </View>
         <View style={styles.infoBox}>
           <Ionicons name="pricetag" size={20} color="#C17A4C" />
@@ -63,7 +63,7 @@ export default function HomeScreen({ navigation }) {
         </View>
       </View>
 
-     { /*Book Tickets Button*/}
+      {/*Book Tickets Button*/}
       <TouchableOpacity
         style={styles.bookButton}
         onPress={() => navigation.navigate("BookingForm")}
@@ -74,9 +74,9 @@ export default function HomeScreen({ navigation }) {
       {/* Featured Artists Section */}
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Featured Maelems</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("ArtistsTab")}>
-          <Text style={styles.seeAll}>See All</Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ArtistsTab")}
+        ></TouchableOpacity>
       </View>
 
       {/* Artists Grid */}
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.burntBronze,
     marginHorizontal: 16,
     padding: 14,
-    borderRadius: 8,
+    borderRadius: 20,
     alignItems: "center",
     marginBottom: 28,
   },
@@ -191,16 +191,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 16,
     marginBottom: 20,
+    gap: 10,
   },
   artistCardWrapper: {
     flex: 1,
-    marginHorizontal: 2,
   },
+
   browseButton: {
     backgroundColor: colors.burntBronze,
     marginHorizontal: 16,
     padding: 14,
-    borderRadius: 8,
+    borderRadius: 20,
     alignItems: "center",
     marginBottom: 40,
   },

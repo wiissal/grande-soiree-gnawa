@@ -21,19 +21,19 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     marginHorizontal: 8,
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: colors.white,
   },
   image: {
     width: '100%',
-    height: 150,
+    height: 200,
   },
   content: {
     padding: 12,
   },
   name: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 'bold',
     color: colors.deepTeal,
     marginBottom: 4,

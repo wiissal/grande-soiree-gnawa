@@ -73,9 +73,11 @@ function TabNavigator() {
         tabBarStyle: {
           backgroundColor: '#1a1a1a',
           borderTopWidth: 0,
-          paddingBottom: 8,
-          paddingTop: 8,
+          paddingBottom: 3,
+          paddingTop: 6,
           height: 60,
+          borderTopRightRadius: 10,
+          borderTopLeftRadius: 10, 
         },
         tabBarLabel: () => null,
       })}
