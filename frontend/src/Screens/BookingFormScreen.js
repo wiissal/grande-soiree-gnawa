@@ -7,34 +7,69 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
+import { bookingService } from '../services/bookingService';
+
 export default function BookingFormScreen({ navigation }) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [numTickets, setNumTickets] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const ticketPrice = 90; // MAD per ticket
-  const serviceFee = 20; // MAD
+  const ticketPrice = 450;
+  const serviceFee = 20;
   const totalPrice = numTickets * ticketPrice + serviceFee;
+
   const handleIncrement = () => {
     setNumTickets(numTickets + 1);
   };
-   const handleDecrement = () => {
+
+  const handleDecrement = () => {
     if (numTickets > 1) {
       setNumTickets(numTickets - 1);
     }
   };
-   const handleConfirmBooking = () => {
-    if (!fullName.trim() || !email.trim()) {
-      alert('Please fill in all fields');
-      return;
-    }
-    alert('Booking confirmed!');
-    // Add booking logic here
-  };
-   return (
+
+  const handleConfirmBooking = async () => {
+  if (!fullName.trim() || !email.trim()) {
+    Alert.alert('Error', 'Please fill in all fields');
+    return;
+  }
+
+  setIsLoading(true);
+  try {
+    const bookingData = {
+      user_name: fullName,
+      user_email: email,
+      quantity: numTickets,
+      artist_id: 1,
+      event_info_id: 1,
+    };
+
+    const booking = await bookingService.createBooking(bookingData);
+    
+    Alert.alert('Success', `Booking confirmed!\nCode: ${booking.confirmation_code}`);
+    
+    setFullName('');
+    setEmail('');
+    setNumTickets(1);
+    
+    setTimeout(() => {
+      navigation.navigate('Bookings');
+    }, 1000);
+  } catch (error) {
+    Alert.alert('Error', 'Failed to create booking');
+    console.error('Booking error:', error);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+  return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
       <View style={styles.header}>
@@ -44,6 +79,7 @@ export default function BookingFormScreen({ navigation }) {
         <Text style={styles.headerTitle}>Book Your Tickets</Text>
         <View style={{ width: 24 }} />
       </View>
+
       {/* Banner Image */}
       <View style={styles.bannerContainer}>
         <Image
@@ -56,6 +92,7 @@ export default function BookingFormScreen({ navigation }) {
           <Text style={styles.bannerText}>Gnaoua World Music Festival</Text>
         </View>
       </View>
+
       {/* Form Content */}
       <View style={styles.content}>
         {/* Full Name */}
@@ -70,6 +107,7 @@ export default function BookingFormScreen({ navigation }) {
           />
           <Ionicons name="person" size={20} color={colors.mistGrey} />
         </View>
+
         {/* Email Address */}
         <Text style={styles.label}>Email Address</Text>
         <View style={styles.inputContainer}>
@@ -83,6 +121,7 @@ export default function BookingFormScreen({ navigation }) {
           />
           <Ionicons name="mail" size={20} color={colors.mistGrey} />
         </View>
+
         {/* Number of Tickets */}
         <Text style={styles.label}>Number of Tickets</Text>
         <View style={styles.ticketCounterContainer}>
@@ -103,10 +142,11 @@ export default function BookingFormScreen({ navigation }) {
           </View>
           <Text style={styles.ticketSubtext}>General Admission - 450 MAD</Text>
         </View>
-         {/* Price Breakdown */}
+
+        {/* Price Breakdown */}
         <View style={styles.priceBreakdown}>
           <View style={styles.priceRow}>
-            <Text style={styles.priceLabel}>Ticket Price (x2)</Text>
+            <Text style={styles.priceLabel}>Ticket Price (x{numTickets})</Text>
             <Text style={styles.priceValue}>{numTickets * ticketPrice} MAD</Text>
           </View>
           <View style={styles.priceRow}>
@@ -119,15 +159,24 @@ export default function BookingFormScreen({ navigation }) {
             <Text style={styles.totalPrice}>{totalPrice} MAD</Text>
           </View>
         </View>
+
         {/* Confirm Booking Button */}
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={handleConfirmBooking}
+          disabled={isLoading}
         >
-          <Text style={styles.confirmButtonText}>Confirm Booking</Text>
-          <Ionicons name="arrow-forward" size={20} color={colors.white} />
+          {isLoading ? (
+            <ActivityIndicator size="small" color={colors.white} />
+          ) : (
+            <>
+              <Text style={styles.confirmButtonText}>Confirm Booking</Text>
+              <Ionicons name="arrow-forward" size={20} color={colors.white} />
+            </>
+          )}
         </TouchableOpacity>
-         {/* Terms & Conditions */}
+
+        {/* Terms & Conditions */}
         <Text style={styles.termsText}>
           By booking, you agree to our{' '}
           <Text style={styles.termsLink}>Terms & Conditions.</Text>
@@ -136,6 +185,7 @@ export default function BookingFormScreen({ navigation }) {
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -147,7 +197,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 14,
-     paddingTop: 20, 
     backgroundColor: colors.white,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
@@ -155,17 +204,16 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.burntBronze,
+    color: colors.deepTeal,
   },
   bannerContainer: {
     position: 'relative',
-    height: 190,
+    height: 180,
     backgroundColor: '#2a2a2a',
   },
   bannerImage: {
     width: '100%',
     height: '100%',
-
   },
   bannerOverlay: {
     position: 'absolute',
@@ -182,7 +230,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingVertical: 20,
   },
   label: {
     fontSize: 14,
@@ -206,13 +254,13 @@ const styles = StyleSheet.create({
   },
   ticketCounterContainer: {
     marginBottom: 24,
-     alignItems: 'center',
+    alignItems: 'center',
   },
   counterWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
-      justifyContent: 'center',
+    justifyContent: 'center',
   },
   counterButton: {
     width: 40,
@@ -246,9 +294,9 @@ const styles = StyleSheet.create({
     color: colors.mistGrey,
   },
   priceBreakdown: {
-    backgroundColor: '#EDE8D0',
+    backgroundColor: '#f9f9f9',
     padding: 16,
-    borderRadius: 15,
+    borderRadius: 8,
     marginBottom: 20,
   },
   priceRow: {
@@ -311,7 +359,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
-
-
-

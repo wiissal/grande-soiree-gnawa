@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,108 +7,151 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../constants/colors';
+import { bookingService } from '../services/bookingService';
 
 export default function MyBookingsScreen({ navigation }) {
   const [searchText, setSearchText] = useState('');
- // Mock bookings - replace with real data later
-  const mockBookings = [
-    {
-      id: 1,
-      code: 'GNA-4823-X',
-      artist: 'Maelem Hamid El Kasri',
-      date: 'Sat, 24 June',
-      time: '20:00',
-      tickets: '2 Tickets',
-      status: 'CONFIRMED',
-      image: 'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=150&h=150&fit=crop',
-    },
-    {
-      id: 2,
-      code: 'GNA-4122-B',
-      artist: 'OUM',
-      date: 'Sun, 25 June',
-      time: '21:30',
-      tickets: '1 Ticket',
-      status: 'PENDING',
-      image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=150&h=150&fit=crop',
-    },
-  ];
-  const filteredBookings = mockBookings.filter(
+  const [email, setEmail] = useState('');
+  const [bookings, setBookings] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const handleSearch = async () => {
+    if (!email.trim()) {
+      alert('Please enter your email');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const data = await bookingService.getBookingByEmail(email);
+      setBookings(Array.isArray(data) ? data : [data]);
+      setHasSearched(true);
+    } catch (error) {
+      console.error('Error fetching bookings:', error);
+      setBookings([]);
+      setHasSearched(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const filteredBookings = bookings.filter(
     (booking) =>
-      booking.code.toLowerCase().includes(searchText.toLowerCase()) ||
-      booking.artist.toLowerCase().includes(searchText.toLowerCase())
+      booking.confirmation_code.toLowerCase().includes(searchText.toLowerCase()) ||
+      booking.user_name.toLowerCase().includes(searchText.toLowerCase())
   );
-  const getStatusStyle = (status) => {
-    return status === 'CONFIRMED'
-      ? styles.statusConfirmed
-      : styles.statusPending;
-  };
-const getStatusTextStyle = (status) => {
-    return status === 'CONFIRMED'
-      ? styles.statusConfirmedText
-      : styles.statusPendingText;
-  };
-   const renderBookingCard = (booking) => (
+
+  const renderBookingCard = (booking) => (
     <View key={booking.id} style={styles.bookingCard}>
       <View style={styles.cardContent}>
         <View style={styles.cardLeft}>
           <View style={styles.codeRow}>
-            <Text style={styles.bookingCode}>{booking.code}</Text>
+            <Text style={styles.bookingCode}>{booking.confirmation_code}</Text>
             <Ionicons name="copy" size={16} color={colors.mistGrey} />
           </View>
 
-          <Text style={styles.artistName}>{booking.artist}</Text>
+          <Text style={styles.artistName}>{booking.user_name}</Text>
 
           <View style={styles.detailsRow}>
-            <Ionicons name="calendar" size={14} color={colors.mistGrey} />
-            <Text style={styles.detailText}>{booking.date} • {booking.time}</Text>
+            <Ionicons name="mail" size={14} color={colors.mistGrey} />
+            <Text style={styles.detailText}>{booking.user_email}</Text>
           </View>
 
           <View style={styles.detailsRow}>
             <Ionicons name="ticket" size={14} color={colors.mistGrey} />
-            <Text style={styles.detailText}>{booking.tickets}</Text>
+            <Text style={styles.detailText}>{booking.quantity} Ticket(s)</Text>
           </View>
 
-          <View style={[getStatusStyle(booking.status)]}>
-            <Text style={[getStatusTextStyle(booking.status)]}>
-              {booking.status}
+          <View style={[styles.statusBox, getStatusStyle(booking.booking_status)]}>
+            <Text style={[styles.statusText, getStatusTextStyle(booking.booking_status)]}>
+              {booking.booking_status.toUpperCase()}
             </Text>
           </View>
         </View>
 
-        <Image source={{ uri: booking.image }} style={styles.artistImage} />
+        <View style={styles.priceSection}>
+          <Text style={styles.priceLabel}>Total</Text>
+          <Text style={styles.price}>{booking.total_price} MAD</Text>
+        </View>
       </View>
     </View>
   );
-const hasBookings = filteredBookings.length > 0;
-return (
+
+  const getStatusStyle = (status) => {
+    return status === 'confirmed'
+      ? styles.statusConfirmed
+      : styles.statusPending;
+  };
+
+  const getStatusTextStyle = (status) => {
+    return status === 'confirmed'
+      ? styles.statusConfirmedText
+      : styles.statusPendingText;
+  };
+
+  return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-     {/* Header */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>My Bookings</Text>
-      </View> 
-       {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color={colors.mistGrey} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search by email or code"
-          placeholderTextColor={colors.mistGrey}
-          value={searchText}
-          onChangeText={setSearchText}
-        />
       </View>
-       {hasBookings ? (
+
+      {/* Search Bar */}
+      <View style={styles.searchSection}>
+        <View style={styles.emailInputContainer}>
+          <Ionicons name="mail" size={20} color={colors.mistGrey} />
+          <TextInput
+            style={styles.emailInput}
+            placeholder="Enter your email"
+            placeholderTextColor={colors.mistGrey}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          <TouchableOpacity onPress={handleSearch} disabled={isLoading}>
+            <Ionicons name="search" size={20} color={colors.burntBronze} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Search by code */}
+        {hasSearched && (
+          <View style={styles.searchContainer}>
+            <Ionicons name="search" size={20} color={colors.mistGrey} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search by code or name..."
+              placeholderTextColor={colors.mistGrey}
+              value={searchText}
+              onChangeText={setSearchText}
+            />
+          </View>
+        )}
+      </View>
+
+      {/* Loading */}
+      {isLoading && (
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color={colors.burntBronze} />
+        </View>
+      )}
+
+      {/* Bookings List */}
+      {hasSearched && !isLoading && filteredBookings.length > 0 && (
         <View style={styles.bookingsContent}>
           {filteredBookings.map((booking) => renderBookingCard(booking))}
         </View>
-      ) : (
+      )}
+
+      {/* Empty State */}
+      {hasSearched && !isLoading && filteredBookings.length === 0 && (
         <View style={styles.emptyState}>
           <Ionicons name="ticket-outline" size={60} color={colors.mistGrey} />
-          <Text style={styles.emptyTitle}>No bookings yet</Text>
+          <Text style={styles.emptyTitle}>No bookings found</Text>
           <Text style={styles.emptySubtitle}>
             Explore the lineup and book your tickets to experience the magic of Gnawa
           </Text>
@@ -120,9 +163,21 @@ return (
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Initial State */}
+      {!hasSearched && (
+        <View style={styles.emptyState}>
+          <Ionicons name="ticket-outline" size={60} color={colors.mistGrey} />
+          <Text style={styles.emptyTitle}>Find Your Bookings</Text>
+          <Text style={styles.emptySubtitle}>
+            Enter your email above to view all your bookings
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -136,13 +191,29 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: colors.burntBronze,
-    paddingTop: 20,
+  },
+  searchSection: {
+    paddingHorizontal: 20,
+    paddingBottom: 16,
+  },
+  emailInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    paddingHorizontal: 12,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+    gap: 8,
+  },
+  emailInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontSize: 14,
+    color: colors.deepTeal,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20,
-    marginBottom: 20,
     paddingHorizontal: 12,
     backgroundColor: '#f5f5f5',
     borderRadius: 8,
@@ -168,6 +239,7 @@ const styles = StyleSheet.create({
   cardContent: {
     flexDirection: 'row',
     padding: 16,
+    justifyContent: 'space-between',
   },
   cardLeft: {
     flex: 1,
@@ -199,13 +271,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.mistGrey,
   },
-  statusConfirmed: {
-    backgroundColor: colors.burntBronze,
+  statusBox: {
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     alignSelf: 'flex-start',
     marginTop: 8,
+  },
+  statusConfirmed: {
+    backgroundColor: colors.burntBronze,
   },
   statusConfirmedText: {
     fontSize: 11,
@@ -214,22 +288,32 @@ const styles = StyleSheet.create({
   },
   statusPending: {
     backgroundColor: '#FFA500',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    alignSelf: 'flex-start',
-    marginTop: 8,
   },
   statusPendingText: {
     fontSize: 11,
     fontWeight: 'bold',
     color: colors.white,
   },
-  artistImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
+  priceSection: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
     marginLeft: 12,
+  },
+  priceLabel: {
+    fontSize: 11,
+    color: colors.mistGrey,
+    marginBottom: 4,
+  },
+  price: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.burntBronze,
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
   },
   emptyState: {
     flex: 1,

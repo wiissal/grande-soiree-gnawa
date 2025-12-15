@@ -1,12 +1,11 @@
-import { apiClient } from "./api";
-import { ENDPOINTS } from "../constants/api";
+import { API_BASE_URL, ENDPOINTS } from "../constants/api";
 
 export const eventService = {
-  //get event info
   getEvent: async () => {
     try {
-      const response = await apiClient.get(ENDPOINTS.getEvent);
-      return response.data;
+      const response = await fetch(`${API_BASE_URL}${ENDPOINTS.getEvent}`);
+      const json = await response.json();
+      return json.data;
     } catch (error) {
       console.error("Error fetching event:", error);
       throw error;
