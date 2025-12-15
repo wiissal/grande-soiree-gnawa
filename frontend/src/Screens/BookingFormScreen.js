@@ -204,11 +204,13 @@ const styles = StyleSheet.create({
   },
   ticketCounterContainer: {
     marginBottom: 24,
+     alignItems: 'center',
   },
   counterWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
+      justifyContent: 'center',
   },
   counterButton: {
     width: 40,
