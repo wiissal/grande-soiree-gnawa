@@ -86,8 +86,11 @@ export default function HomeScreen({ navigation }) {
             <ArtistCard
               artist={artist}
               onPress={() =>
-                navigation.navigate("ArtistDetail", { id: artist.id })
-              }
+                navigation.navigate("Artists", {
+                  screen: "ArtistDetail",
+                   params: {id: artist.id }
+              })
+            }
             />
           </View>
         ))}
