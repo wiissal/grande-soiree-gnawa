@@ -15,7 +15,7 @@ export default function BookingFormScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [numTickets, setNumTickets] = useState(1);
 
-  const ticketPrice = 450; // MAD per ticket
+  const ticketPrice = 90; // MAD per ticket
   const serviceFee = 20; // MAD
   const totalPrice = numTickets * ticketPrice + serviceFee;
   const handleIncrement = () => {
