@@ -38,7 +38,6 @@ function HomeStack() {
     >
       <Stack.Screen name="HomeList" component={HomeScreen} />
       <Stack.Screen name="BookingForm" component={BookingFormScreen} />
-      <Stack.Screen name= "ArtistList" component={ArtistsListScreen}/>
     </Stack.Navigator>
   );
 }
