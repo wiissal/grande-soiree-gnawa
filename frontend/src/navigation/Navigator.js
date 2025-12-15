@@ -19,7 +19,7 @@ function HomeStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerTitle: 'La Grande Soirée Gnawa',
         headerTitleAlign: 'center',
         headerTitleStyle: {
