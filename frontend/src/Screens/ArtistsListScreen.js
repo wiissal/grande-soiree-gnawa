@@ -7,79 +7,22 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../constants/colors";
+import { useQuery } from '@tanstack/react-query';
+import { artistService } from '../services/artistService';
 
 export default function ArtistListScreen({ navigation }) {
   const [searchText, setSearchText] = useState("");
-  const mockArtists = [
-    {
-      id: 1,
-      name: "Oum",
-      description: "Breaking barriers on one of the finest female voices...",
-      price: "  MAD 149",
-      image:
-        "https://cdn-images.dzcdn.net/images/artist/7399d5192ac0599112e305e15adc91ac/1900x1900-000000-81-0-0.jpg",
-    },
-    {
-      id: 2,
-      name: "Mehdi Nassouli",
-      description: "A young virtuoso dedicated to preserving Agadir's...",
-      price: "MAD 150",
-      image:
-        "https://fesfestival.com/2016/inc/uploads/2016/01/Mehdi-Nassouli.jpg",
-    },
-    {
-      id: 3,
-      name: "Omar Hayat",
-      description: "Master musician bringing traditional Gnawa rhythms...",
-      price: "MAD 181",
-      image:
-        "https://www.festival-gnaoua.net/wp-content/uploads/2025/05/Maalem-Omar-hayat-1024x760.jpg",
-    },
-    {
-      id: 4,
-      name: "Maalem Marchane",
-      description: "The folk rock hero of Africa blending tradition...",
-      price: "MAD 149",
-      image:
-        "https://www.festival-gnaoua.net/wp-content/uploads/2025/05/Maalem-Abdelkebir-Merchane.jpg",
-    },
-    {
-      id: 5,
-      name: "Hamid Elkasri",
-      description: "Master of the guenbri known for soulful tones...",
-      price: "MAD 181",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzS2jXP8ENRvutqUrS3WtNihJVhSUJIAEG_A&s",
-    },
-    {
-      id: 6,
-      name: "Mahmoud Gania",
-      description: "The pioneers of Gnawa fusion, bringing tradition...",
-      price: "MAD 196",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa4spo7wwVK_Vwc2rrTQEhiMdAZs_PgCxWVA&s",
-    },
-    {
-      id: 7,
-      name: "Hindi Zahra",
-      description: "Blending traditional Gnawa with contemporary sounds...",
-      price: "MAD 165",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgJW659y5OvkIzxsRx7o9C46-tnZGm4wQ8kA&s",
-    },
-    {
-      id: 8,
-      name: "Mehdi Qamoum",
-      description: "A versatile artist mastering multiple instruments...",
-      price: "MAD 155",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwm_uN1KVSfy7FjkVk7haLWjPVarCymsh-Bg&s",
-    },
-  ];
-  const filteredArtists = mockArtists.filter(
+
+  const { data: artists = [], isLoading, error } = useQuery({
+    queryKey: ['artists'],
+    queryFn: () => artistService.getArtists(),
+  });
+
+  const filteredArtists = artists.filter(
     (artist) =>
       artist.name.toLowerCase().includes(searchText.toLowerCase()) ||
       artist.description.toLowerCase().includes(searchText.toLowerCase())
@@ -107,6 +50,21 @@ export default function ArtistListScreen({ navigation }) {
     </TouchableOpacity>
     </TouchableOpacity>
   );
+   if (isLoading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={colors.burntBronze} />
+      </View>
+    );
+  }
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.errorText}>Error loading artists</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -265,5 +223,14 @@ getTicketText: {
   color: colors.white,
   fontSize: 13,
   fontWeight: 'bold',
+},
+center: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+errorText: {
+  fontSize: 16,
+  color: colors.deepTeal,
 },
 });

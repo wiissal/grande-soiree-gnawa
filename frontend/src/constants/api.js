@@ -9,6 +9,6 @@ export const ENDPOINTS ={
 
   //bookings
   createBooking: '/bookings',
-  getBookingByEmail: (email) => `bookings/email/${email}`,
-  getBookingByCode: (code) => `bookings/${code}`,
+  getBookingByEmail: (email) => `/bookings/email/${email}`, 
+  getBookingByCode: (code) => `/bookings/${code}`, 
 };

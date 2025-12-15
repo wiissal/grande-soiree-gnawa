@@ -17,7 +17,7 @@ export const artistService = {
     try {
       const response = await apiClient.get(ENDPOINTS.getArtistsById(id));
       return response.data;
-    } catch (erro) {
+    } catch (error) {
       console.error("Error fetching artist:", error);
       throw error;
     }

@@ -26,7 +26,7 @@ export const bookingService = {
   },
   getBookingByCode: async (code) => {
     try {
-      const response = await apiClient.get(ENDPOINTS.getbookingByCode(code));
+      const response = await apiClient.get(ENDPOINTS.getBookingByCode(code));
       return response.data;
     } catch (error) {
       console.error("Error fetching artists:", error);

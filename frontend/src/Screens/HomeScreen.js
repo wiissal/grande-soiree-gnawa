@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { colors } from "../constants/colors";
-import EventCard from "../components/EventCard";
+import Eventcard from "../components/Eventcard";
 import ArtistCard from "../components/ArtistCard";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -45,7 +45,7 @@ export default function HomeScreen({ navigation }) {
       </View>
       {/* Event Card */}
       <View style={styles.eventSection}>
-        <EventCard event={event} />
+        <Eventcard event={event} />
       </View>
 
       {/* Event Info */}
