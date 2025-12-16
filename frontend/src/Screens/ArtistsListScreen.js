@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     color: colors.deepTeal,
     flex: 1,
     textAlign: "center",
+    paddingTop: 20,
   },
   searchContainer: {
     flexDirection: "row",

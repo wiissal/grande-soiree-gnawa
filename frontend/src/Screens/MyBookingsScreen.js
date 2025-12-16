@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,21 +8,21 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../constants/colors';
-import { bookingService } from '../services/bookingService';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { colors } from "../constants/colors";
+import { bookingService } from "../services/bookingService";
 
 export default function MyBookingsScreen({ navigation }) {
-  const [searchText, setSearchText] = useState('');
-  const [email, setEmail] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [email, setEmail] = useState("");
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     if (!email.trim()) {
-      alert('Please enter your email');
+      alert("Please enter your email");
       return;
     }
 
@@ -32,7 +32,7 @@ export default function MyBookingsScreen({ navigation }) {
       setBookings(Array.isArray(data) ? data : [data]);
       setHasSearched(true);
     } catch (error) {
-      console.error('Error fetching bookings:', error);
+      console.error("Error fetching bookings:", error);
       setBookings([]);
       setHasSearched(true);
     } finally {
@@ -42,8 +42,14 @@ export default function MyBookingsScreen({ navigation }) {
 
   const filteredBookings = bookings.filter(
     (booking) =>
-      booking.confirmation_code.toLowerCase().includes(searchText.toLowerCase()) ||
-      booking.user_name.toLowerCase().includes(searchText.toLowerCase())
+      booking &&
+      booking.confirmation_code &&
+      booking.user_name &&
+      (booking.confirmation_code
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+        booking.user_name.toLowerCase().includes(searchText.toLowerCase()) ||
+        booking.user_email.toLowerCase().includes(searchText.toLowerCase()))
   );
 
   const renderBookingCard = (booking) => (
@@ -67,8 +73,15 @@ export default function MyBookingsScreen({ navigation }) {
             <Text style={styles.detailText}>{booking.quantity} Ticket(s)</Text>
           </View>
 
-          <View style={[styles.statusBox, getStatusStyle(booking.booking_status)]}>
-            <Text style={[styles.statusText, getStatusTextStyle(booking.booking_status)]}>
+          <View
+            style={[styles.statusBox, getStatusStyle(booking.booking_status)]}
+          >
+            <Text
+              style={[
+                styles.statusText,
+                getStatusTextStyle(booking.booking_status),
+              ]}
+            >
               {booking.booking_status.toUpperCase()}
             </Text>
           </View>
@@ -83,13 +96,13 @@ export default function MyBookingsScreen({ navigation }) {
   );
 
   const getStatusStyle = (status) => {
-    return status === 'confirmed'
+    return status === "confirmed"
       ? styles.statusConfirmed
       : styles.statusPending;
   };
 
   const getStatusTextStyle = (status) => {
-    return status === 'confirmed'
+    return status === "confirmed"
       ? styles.statusConfirmedText
       : styles.statusPendingText;
   };
@@ -101,13 +114,13 @@ export default function MyBookingsScreen({ navigation }) {
         <Text style={styles.headerTitle}>My Bookings</Text>
       </View>
 
-      {/* Search Bar */}
+      {/*Search Bar*/}
       <View style={styles.searchSection}>
         <View style={styles.emailInputContainer}>
           <Ionicons name="mail" size={20} color={colors.mistGrey} />
           <TextInput
             style={styles.emailInput}
-            placeholder="Enter your email"
+            placeholder="Enter your email to find bookings"
             placeholderTextColor={colors.mistGrey}
             value={email}
             onChangeText={setEmail}
@@ -118,17 +131,20 @@ export default function MyBookingsScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* Search by code */}
+        {/* Single Search Field - searches by code, name, OR email */}
         {hasSearched && (
           <View style={styles.searchContainer}>
             <Ionicons name="search" size={20} color={colors.mistGrey} />
             <TextInput
               style={styles.searchInput}
-              placeholder="Search by code or name..."
+              placeholder="Search by code, name, or email..."
               placeholderTextColor={colors.mistGrey}
               value={searchText}
               onChangeText={setSearchText}
             />
+            <TouchableOpacity onPress={handleSearch} disabled={isLoading}>
+            <Ionicons name="search" size={20} color={colors.burntBronze} />
+          </TouchableOpacity>
           </View>
         )}
       </View>
@@ -153,11 +169,12 @@ export default function MyBookingsScreen({ navigation }) {
           <Ionicons name="ticket-outline" size={60} color={colors.mistGrey} />
           <Text style={styles.emptyTitle}>No bookings found</Text>
           <Text style={styles.emptySubtitle}>
-            Explore the lineup and book your tickets to experience the magic of Gnawa
+            Explore the lineup and book your tickets to experience the magic of
+            Gnawa
           </Text>
           <TouchableOpacity
             style={styles.discoverButton}
-            onPress={() => navigation.navigate('Artists')}
+            onPress={() => navigation.navigate("Artists")}
           >
             <Text style={styles.discoverButtonText}>Discover Artists</Text>
           </TouchableOpacity>
@@ -189,19 +206,20 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.burntBronze,
+    paddingTop: 20,
   },
   searchSection: {
     paddingHorizontal: 20,
     paddingBottom: 16,
   },
   emailInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 12,
     paddingHorizontal: 12,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     borderRadius: 8,
     gap: 8,
   },
@@ -212,12 +230,13 @@ const styles = StyleSheet.create({
     color: colors.deepTeal,
   },
   searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 12,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     borderRadius: 8,
-    gap: 8,
+    gap: 2,
+    borderRadius: 15,
   },
   searchInput: {
     flex: 1,
@@ -234,36 +253,36 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: "#f0f0f0",
   },
   cardContent: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 16,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   cardLeft: {
     flex: 1,
   },
   codeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
     marginBottom: 8,
   },
   bookingCode: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.deepTeal,
   },
   artistName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.burntBronze,
     marginBottom: 10,
   },
   detailsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 6,
     marginBottom: 8,
   },
@@ -275,7 +294,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 8,
   },
   statusConfirmed: {
@@ -283,20 +302,20 @@ const styles = StyleSheet.create({
   },
   statusConfirmedText: {
     fontSize: 11,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.white,
   },
   statusPending: {
-    backgroundColor: '#FFA500',
+    backgroundColor: "#FFA500",
   },
   statusPendingText: {
     fontSize: 11,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.white,
   },
   priceSection: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    justifyContent: "center",
+    alignItems: "flex-end",
     marginLeft: 12,
   },
   priceLabel: {
@@ -306,25 +325,25 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.burntBronze,
   },
   center: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 40,
   },
   emptyState: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 60,
   },
   emptyTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.deepTeal,
     marginTop: 16,
     marginBottom: 8,
@@ -332,7 +351,7 @@ const styles = StyleSheet.create({
   emptySubtitle: {
     fontSize: 13,
     color: colors.mistGrey,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: 20,
     marginBottom: 32,
   },
@@ -345,6 +364,6 @@ const styles = StyleSheet.create({
   discoverButtonText: {
     color: colors.white,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });

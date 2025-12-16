@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: colors.deepTeal,
+    paddingTop: 15,
   },
   bannerContainer: {
     position: 'relative',

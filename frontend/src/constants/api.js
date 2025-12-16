@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://192.168.0.228:3000/api';
+export const API_BASE_URL = 'http://192.168.1.120:3000/api';
 
 export const ENDPOINTS = {
   getEvent: '/event',
