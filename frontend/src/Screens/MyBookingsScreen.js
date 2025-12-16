@@ -137,7 +137,7 @@ export default function MyBookingsScreen({ navigation }) {
             <Ionicons name="search" size={20} color={colors.mistGrey} />
             <TextInput
               style={styles.searchInput}
-              placeholder="Search by code, name, or email..."
+              placeholder="Search by code..."
               placeholderTextColor={colors.mistGrey}
               value={searchText}
               onChangeText={setSearchText}
