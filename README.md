@@ -2,7 +2,7 @@
 
 A comprehensive mobile application for booking tickets to the Gnawa World Music Festival in Agadir, Morocco. Built with React Native and Node.js backend.
 
-## 🎯 Overview
+##  Overview
 
 La Grande Soirée Gnawa is a full-stack mobile application that allows users to:
 - Browse festival artists and their details
@@ -11,7 +11,7 @@ La Grande Soirée Gnawa is a full-stack mobile application that allows users to:
 - Manage their bookings
 - Search through booking history
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React Native** - Mobile framework
@@ -28,7 +28,7 @@ La Grande Soirée Gnawa is a full-stack mobile application that allows users to:
 - **PostgreSQL** - Database
 - **CORS** - Cross-Origin Resource Sharing
 
-## 📱 Features
+##  Features
 
 ### Implemented Features
 ✅ Splash screen with 4-second delay
@@ -50,7 +50,7 @@ La Grande Soirée Gnawa is a full-stack mobile application that allows users to:
 5. **BookingFormScreen** - Ticket booking with price calculation
 6. **MyBookingsScreen** - View booking history
 
-## 📂 Project Structure
+##  Project Structure
 ```
 grande-soiree-gnawa/
 ├── frontend/
@@ -102,7 +102,7 @@ grande-soiree-gnawa/
     └── package.json
 ```
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - Node.js (v14+)
@@ -185,7 +185,7 @@ npm start
 ### Event
 - `GET /api/event` - Get event information
 
-## 🎨 Design System
+##  Design System
 
 ### Color Palette
 ```
@@ -203,7 +203,7 @@ black:        #000000
 - **Body**: 14px Regular
 - **Small**: 12px Regular
 
-## 📝 Database Schema
+##  Database Schema
 
 ### Artists Table
 - id (PRIMARY KEY)
@@ -237,7 +237,7 @@ black:        #000000
 - image_url
 - timestamps
 
-## 🔄 Data Flow
+##  Data Flow
 
 1. **User opens app** → Splash screen (4s) → Home screen
 2. **Browse artists** → ArtistsList with search → ArtistDetail
@@ -246,18 +246,18 @@ black:        #000000
 
 
 
-## 🤝 Contributors
+##  Contributors
 
 - **Wissal** - Full Stack Developer
   
-## 📄 License
+##  License
 
 MIT License - feel free to use this project for learning purposes.
 
-## 📞 Support
+##  Support
 
 For issues or questions, please open an issue on GitHub.
 
 ---
 
-**Build with ❤️ at SIMPLON Bootcamp, Casablanca**
+
